@@ -101,13 +101,21 @@ export const contactSection = {
   label: 'Contact',
   title: "Let's build something together",
   description:
-    'Open to freelance pubmat work, media team roles, and remote opportunities in Miagao and beyond.',
-  cta: 'Send a Message',
+    'Send a message below — no need to leave this page. I reply via email.',
+  cta: 'Send Message',
   linkedinLabel: 'Connect on LinkedIn',
-  /** Pre-filled when someone clicks Email or Send a Message */
+  formSuccessMessage: "Message sent! I'll reply to your email soon.",
+  /**
+   * FREE inbox delivery (recommended):
+   * 1. Go to https://web3forms.com
+   * 2. Enter angjoshua0924@gmail.com → Get Access Key
+   * 3. Paste the key below (keeps clients on your site when they send)
+   */
+  web3formsAccessKey: '',
   emailSubject: 'Portfolio Inquiry',
   emailBody:
     'Hi Joshua,\n\nI came across your portfolio and would like to connect about:\n\n[Your message here]\n\nThank you!',
+  directLinksTitle: 'Or reach me directly',
 }
 
 export const skills = {

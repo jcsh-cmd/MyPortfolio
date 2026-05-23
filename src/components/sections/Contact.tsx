@@ -1,25 +1,21 @@
 import { motion } from 'framer-motion'
 import { Linkedin, Mail, Phone } from 'lucide-react'
+import { ContactForm } from '../contact/ContactForm'
 import { contactSection, site } from '../../data/content'
-import { linkedInLink, mailtoLink, telLink } from '../../lib/contact'
+import { linkedInLink, telLink } from '../../lib/contact'
 import { GlassCard } from '../ui/GlassCard'
-import { GlowButton } from '../ui/GlowButton'
 import { SectionHeading } from '../ui/SectionHeading'
 
-const emailHref = mailtoLink(site.email, {
-  subject: contactSection.emailSubject,
-  body: contactSection.emailBody,
-})
-
-const channels = [
+const directChannels = [
   {
     label: 'Email',
     value: site.email,
-    href: emailHref,
+    href: `mailto:${site.email}`,
     icon: Mail,
     glow: 'hover:border-violet-400/30',
     external: false,
-    ariaLabel: `Send email to ${site.email}`,
+    ariaLabel: `Copy path: email ${site.email}`,
+    hint: site.email,
   },
   {
     label: 'Phone',
@@ -29,6 +25,7 @@ const channels = [
     glow: 'hover:border-cyan-400/30',
     external: false,
     ariaLabel: `Call ${site.phone}`,
+    hint: 'Tap to call',
   },
   {
     label: 'LinkedIn',
@@ -37,7 +34,8 @@ const channels = [
     icon: Linkedin,
     glow: 'hover:border-emerald-400/30',
     external: true,
-    ariaLabel: 'Open LinkedIn profile in a new tab',
+    ariaLabel: 'Open LinkedIn profile',
+    hint: 'Opens in new tab',
   },
 ] as const
 
@@ -58,50 +56,35 @@ export function Contact() {
           transition={{ duration: 0.5 }}
         >
           <GlassCard strong className="glow-violet p-6 sm:p-10">
-            <div className="space-y-4">
-              {channels.map((channel, i) => {
-                const Icon = channel.icon
-                return (
-                  <motion.div
-                    key={channel.label}
-                    initial={{ opacity: 0, x: -12 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.08 }}
-                  >
-                    <a
+            <ContactForm />
+
+            <div className="mt-10 border-t border-white/10 pt-8">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+                {contactSection.directLinksTitle}
+              </p>
+              <div className="grid gap-3 sm:grid-cols-3">
+                {directChannels.map((channel, i) => {
+                  const Icon = channel.icon
+                  return (
+                    <motion.a
+                      key={channel.label}
                       href={channel.href}
                       target={channel.external ? '_blank' : undefined}
                       rel={channel.external ? 'noopener noreferrer' : undefined}
                       aria-label={channel.ariaLabel}
-                      className={`glass group flex cursor-pointer items-center gap-4 rounded-xl p-4 transition-all duration-300 ${channel.glow} hover:-translate-y-0.5 active:scale-[0.99]`}
+                      initial={{ opacity: 0, y: 8 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.05 }}
+                      className={`glass flex cursor-pointer flex-col items-center gap-2 rounded-xl p-4 text-center transition-all duration-300 ${channel.glow} hover:-translate-y-0.5`}
                     >
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-white/5">
-                        <Icon className="h-5 w-5 text-zinc-300 transition-colors group-hover:text-white" />
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block text-xs font-medium uppercase tracking-wider text-zinc-500">
-                          {channel.label}
-                        </span>
-                        <span className="block truncate text-sm font-medium text-zinc-200 group-hover:text-white">
-                          {channel.value}
-                        </span>
-                        <span className="mt-0.5 block text-[11px] text-zinc-600 group-hover:text-zinc-500">
-                          {channel.label === 'Email' && 'Tap to open your email app'}
-                          {channel.label === 'Phone' && 'Tap to call on mobile'}
-                          {channel.label === 'LinkedIn' && 'Tap to view profile'}
-                        </span>
-                      </span>
-                    </a>
-                  </motion.div>
-                )
-              })}
-            </div>
-
-            <div className="mt-8 flex justify-center">
-              <GlowButton href={emailHref} className="cursor-pointer">
-                {contactSection.cta}
-              </GlowButton>
+                      <Icon className="h-5 w-5 text-zinc-400" />
+                      <span className="text-xs font-medium text-zinc-300">{channel.label}</span>
+                      <span className="line-clamp-2 text-[10px] text-zinc-600">{channel.hint}</span>
+                    </motion.a>
+                  )
+                })}
+              </div>
             </div>
           </GlassCard>
         </motion.div>
