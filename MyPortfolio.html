@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="refresh" content="2;url=http://localhost:5173/" />
+  <title>Opening Portfolio…</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, sans-serif;
+      background: #050508;
+      color: #e4e4e7;
+      padding: 2rem;
+      text-align: center;
+    }
+    .card {
+      max-width: 28rem;
+      padding: 2rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(16px);
+    }
+    h1 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+    p { color: #a1a1aa; font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem; }
+    a {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 0.75rem;
+      background: linear-gradient(135deg, #7c3aed, #06b6d4);
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+    code {
+      display: block;
+      margin: 1rem 0;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      background: rgba(0,0,0,0.4);
+      font-size: 0.8rem;
+      color: #c4b5fd;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Preview vs. live link</h1>
+    <p>
+      <strong>While editing:</strong> run the dev server (<code>npm run dev</code>) — that’s only on your PC.
+    </p>
+    <p>
+      <strong>For recruiters &amp; clients:</strong> run <code>npm run build</code>, then upload to
+      Vercel or Netlify (free). They open your link like any website — no server needed on their side.
+    </p>
+    <p>Local preview redirecting to <strong>http://localhost:5173</strong>…</p>
+    <a href="http://localhost:5173/">Open local preview →</a>
+    <p style="margin-top:1.25rem;font-size:0.75rem;">
+      Double-click <strong>START-PORTFOLIO.bat</strong> to start preview on this computer.
+    </p>
+  </div>
+</body>
+</html>
