@@ -104,14 +104,9 @@ export const contactSection = {
     'Send a message below — no need to leave this page. I reply via email.',
   cta: 'Send Message',
   linkedinLabel: 'Connect on LinkedIn',
-  formSuccessMessage: "Message sent! I'll reply to your email soon.",
-  /**
-   * FREE inbox delivery (recommended):
-   * 1. Go to https://web3forms.com
-   * 2. Enter angjoshua0924@gmail.com → Get Access Key
-   * 3. Paste the key below (keeps clients on your site when they send)
-   */
-  web3formsAccessKey: '',
+  formSuccessMessage: 'Message Sent Successfully!',
+  /** Fallback if .env.local is missing — prefer VITE_WEB3FORMS_ACCESS_KEY in .env.local */
+  web3formsAccessKey: 'a3e4a540-96c3-4157-8b1e-b546d65862d6',
   emailSubject: 'Portfolio Inquiry',
   emailBody:
     'Hi Joshua,\n\nI came across your portfolio and would like to connect about:\n\n[Your message here]\n\nThank you!',

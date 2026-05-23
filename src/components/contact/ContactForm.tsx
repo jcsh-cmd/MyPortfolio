@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion'
 import { Loader2, Send } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
-import { contactSection, site } from '../../data/content'
-import { mailtoLink } from '../../lib/contact'
+import { contactSection } from '../../data/content'
+import { submitWeb3Form } from './submitWeb3Form'
 import { cn } from '../../lib/utils'
 
 const inputClass =
@@ -14,18 +14,15 @@ export function ContactForm() {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMessage, setErrorMessage] = useState('')
 
-  const accessKey = contactSection.web3formsAccessKey.trim()
-
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault()
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
     setErrorMessage('')
-    setStatus('sending')
 
-    const form = e.currentTarget
-    const data = new FormData(form)
-    const name = String(data.get('name') ?? '').trim()
-    const email = String(data.get('email') ?? '').trim()
-    const message = String(data.get('message') ?? '').trim()
+    const form = event.currentTarget
+    const formData = new FormData(form)
+    const name = String(formData.get('name') ?? '').trim()
+    const email = String(formData.get('email') ?? '').trim()
+    const message = String(formData.get('message') ?? '').trim()
 
     if (!name || !email || !message) {
       setStatus('error')
@@ -33,37 +30,12 @@ export function ContactForm() {
       return
     }
 
+    setStatus('sending')
+
     try {
-      if (accessKey) {
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({
-            access_key: accessKey,
-            name,
-            email,
-            message,
-            subject: `${contactSection.emailSubject} — ${name}`,
-            from_name: site.name,
-          }),
-        })
-
-        const json = (await res.json()) as { success?: boolean; message?: string }
-
-        if (!res.ok || !json.success) {
-          throw new Error(json.message ?? 'Could not send message. Try again.')
-        }
-
-        setStatus('success')
-        form.reset()
-      } else {
-        const href = mailtoLink(site.email, {
-          subject: `${contactSection.emailSubject} — ${name}`,
-          body: `From: ${name}\nReply-to: ${email}\n\n${message}`,
-        })
-        window.location.href = href
-        setStatus('idle')
-      }
+      await submitWeb3Form(form)
+      setStatus('success')
+      form.reset()
     } catch (err) {
       setStatus('error')
       setErrorMessage(err instanceof Error ? err.message : 'Something went wrong.')
@@ -72,6 +44,15 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+      <input
+        type="checkbox"
+        name="botcheck"
+        className="hidden"
+        style={{ display: 'none' }}
+        tabIndex={-1}
+        autoComplete="off"
+      />
+
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="contact-name" className="mb-1.5 block text-xs font-medium text-zinc-400">
@@ -121,14 +102,14 @@ export function ContactForm() {
       </div>
 
       {status === 'success' && (
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-300"
+          className="rounded-xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-300"
           role="status"
         >
           {contactSection.formSuccessMessage}
-        </motion.p>
+        </motion.div>
       )}
 
       {status === 'error' && errorMessage && (
@@ -157,13 +138,6 @@ export function ContactForm() {
           </>
         )}
       </button>
-
-      {!accessKey && (
-        <p className="text-[11px] leading-relaxed text-zinc-600">
-          Tip: Add your free Web3Forms key in <code className="text-zinc-500">content.ts</code> so
-          messages arrive in your inbox without opening Gmail. See comment in that file.
-        </p>
-      )}
     </form>
   )
 }

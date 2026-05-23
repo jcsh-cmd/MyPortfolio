@@ -10,12 +10,13 @@ const directChannels = [
   {
     label: 'Email',
     value: site.email,
-    href: `mailto:${site.email}`,
+    href: undefined as string | undefined,
+    copyText: site.email,
     icon: Mail,
     glow: 'hover:border-violet-400/30',
     external: false,
-    ariaLabel: `Copy path: email ${site.email}`,
-    hint: site.email,
+    ariaLabel: `Copy email ${site.email}`,
+    hint: 'Tap to copy',
   },
   {
     label: 'Phone',
@@ -65,6 +66,28 @@ export function Contact() {
               <div className="grid gap-3 sm:grid-cols-3">
                 {directChannels.map((channel, i) => {
                   const Icon = channel.icon
+                  const className = `glass flex cursor-pointer flex-col items-center gap-2 rounded-xl p-4 text-center transition-all duration-300 ${channel.glow} hover:-translate-y-0.5`
+
+                  if ('copyText' in channel && channel.copyText) {
+                    return (
+                      <motion.button
+                        key={channel.label}
+                        type="button"
+                        aria-label={channel.ariaLabel}
+                        initial={{ opacity: 0, y: 8 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.05 }}
+                        className={className}
+                        onClick={() => void navigator.clipboard.writeText(channel.copyText!)}
+                      >
+                        <Icon className="h-5 w-5 text-zinc-400" />
+                        <span className="text-xs font-medium text-zinc-300">{channel.label}</span>
+                        <span className="line-clamp-2 text-[10px] text-zinc-600">{channel.hint}</span>
+                      </motion.button>
+                    )
+                  }
+
                   return (
                     <motion.a
                       key={channel.label}
@@ -76,7 +99,7 @@ export function Contact() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.05 }}
-                      className={`glass flex cursor-pointer flex-col items-center gap-2 rounded-xl p-4 text-center transition-all duration-300 ${channel.glow} hover:-translate-y-0.5`}
+                      className={className}
                     >
                       <Icon className="h-5 w-5 text-zinc-400" />
                       <span className="text-xs font-medium text-zinc-300">{channel.label}</span>
