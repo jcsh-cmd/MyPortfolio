@@ -68,18 +68,19 @@ export type GraphicDesignItem = {
 export const socialContent: SocialContentItem[] = [
   {
     id: 'social-01',
-    title: 'Event Announcement Campaign',
+    title: 'Happy Teachers Day Event Posting',
     caption:
       'Multi-slide announcement series for a campus foundation week—clear dates, venue, and CTA with brand-consistent typography tuned for quick scans on mobile feeds.',
     engagement: '🔥 High Student Engagement',
-    // image: '/projects/social-01.jpg',
+    image: '/projects/Happy World Teachers’ Day (1).png',
   },
   {
     id: 'social-02',
-    title: 'Informational Carousel Post',
+    title: 'Final Exam Posting',
     caption:
-      'Educational carousel breaking down event guidelines into digestible frames—hook slide, value bullets, and a closing reminder designed to maximize saves and shares.',
+      'Final Exam Posting for the IT students of ISAT-U.',
     engagement: '📈 Strong Save & Share Rate',
+    image: '/projects/FinalExam.png',
     // image: '/projects/social-02.jpg',
   },
 ]
@@ -87,13 +88,13 @@ export const socialContent: SocialContentItem[] = [
 export const graphicDesign: GraphicDesignItem[] = [
   {
     id: 'design-01',
-    title: 'Official Event Poster Layout',
-    // image: '/projects/design-01.jpg',
+    title: 'Ethereal Poster Layout',
+    image: '/projects/Ethereal 061125.png',
   },
   {
     id: 'design-02',
-    title: 'Branded Banner Design',
-    // image: '/projects/design-02.jpg',
+    title: '18th Debut Invitation Poster',
+    image: '/projects/Debut Invitation Letter.png',
   },
 ]
 

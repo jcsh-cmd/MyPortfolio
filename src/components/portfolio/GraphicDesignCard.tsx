@@ -30,8 +30,8 @@ export function GraphicDesignCard({ item, index }: GraphicDesignCardProps) {
             />
           ) : (
             <ProjectImagePlaceholder
-              label="Ethereal 061125"
-              hint={`Add: /public/projects/Ethereal 061125.png`}
+              label="Design layout"
+              hint={`Add: /public/projects/${item.id}.jpg`}
               aspectClass="aspect-[3/4] sm:aspect-[4/5]"
             />
           )}
