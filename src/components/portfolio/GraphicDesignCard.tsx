@@ -24,14 +24,14 @@ export function GraphicDesignCard({ item, index }: GraphicDesignCardProps) {
         <div className="relative aspect-[3/4] overflow-hidden sm:aspect-[4/5]">
           {item.image ? (
             <img
-              src={'/projects/Ethereal 061125.png'}
+              src={item.image}
               alt={item.title}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
             />
           ) : (
             <ProjectImagePlaceholder
-              label="Design layout"
-              hint={`Add: /public/projects/${item.id}.jpg`}
+              label="Ethereal 061125"
+              hint={`Add: /public/projects/Ethereal 061125.png`}
               aspectClass="aspect-[3/4] sm:aspect-[4/5]"
             />
           )}
